@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheather app</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="card">
+    <div class="search">
+        <input type="text" class="search" placeholder="enter city name"spelllcheck="false">
+        <button><img src="search.png" alt=""></button>
+    </div>
+    <div class="weather">
+        <img src="rain.png" alt="" class="weather-icon">
+        <h1 class="temp">22°c</h1>
+        <h2 class="city">Bhubaneswar</h2>
+        <div class="details">
+            <div class="col">
+                <img src="humidity.png" alt="">
+                <div>
+                    <p class="humidity">50%</p>
+                    <p >Humidity</p>
+
+                </div>
+            </div>
+            <div class="col">
+                <img src="wind.png" alt="">
+                <div>
+                    <p class="wind">15km/h</p>
+                    <p >Windspeed</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+ <script>
+    const apikey="d15905a11376cac08d0122fc08ca9007";
+    const apiurl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+    const searchBox=document.querySelector(".search input");
+    const searchBtn=document.querySelector(".search button");
+    async function checkWeather(city){
+        const response=await fetch(apiurl + city+`&appid=${apikey}`);
+        var data=await response.json();
+        console.log(data);
+        document.querySelector(".city").innerHTML=data.name;
+        document.querySelector(".temp").innerHTML=Math.round(data.main.temp) + "°c";
+        document.querySelector(".humidity").innerHTML=data.main.humidity+"%";
+        document.querySelector(".wind").innerHTML=data.wind.speed + "km/h";
+    }
+    searchBtn.addEventListener("click",()=>{
+       checkWeather(searchBox.value);
+    })
+    
+ </script>
+    
+</body>
+</html>
